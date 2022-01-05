@@ -1,3 +1,4 @@
+import 'package:admin_app/provider/category_provider.dart';
 import 'package:admin_app/provider/order_provider.dart';
 import 'package:admin_app/screen/home.dart';
 import 'package:admin_app/screen/login_page.dart';
@@ -8,13 +9,13 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<OrderProvider>(create: (_) => OrderProvider()),
+    ChangeNotifierProvider<CategoryProvider>(create: (_) => CategoryProvider()),
   ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,3 +27,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+//01721071952

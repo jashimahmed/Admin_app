@@ -18,30 +18,28 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  bool onProgress=false;
+  bool onProgress = false;
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool obser = true;
-  String ? token;
-  SharedPreferences ?sharedPreferences;
+  String? token;
+  SharedPreferences? sharedPreferences;
 
-   isLogin() async{
-    SharedPreferences sharedPreferences = await SharedPreferences
-        .getInstance();
+  isLogin() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     token = sharedPreferences.getString("token");
     if (token != null) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return MainPage();
       }));
     }
   }
 
-
-   _submit() async {
+  _submit() async {
     if (mounted) {
       setState(() {
-      //  onProgress = true;
+        //  onProgress = true;
       });
       final form = _formKey.currentState;
       if (form!.validate()) {
@@ -52,8 +50,9 @@ class _LoginPageState extends State<LoginPage> {
           emailController.clear();
           passwordController.clear();
           onProgress = false;
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-            return HomePage();
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return MainPage();
           }));
           print(":Succcccccccccccccccccccccc");
           return "Logged In";
@@ -72,27 +71,27 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-
   @override
   void initState() {
     isLogin();
     super.initState();
   }
 
-
-  getLogin()async{
+  getLogin() async {
     setState(() {
       onProgress = true;
     });
     try {
       sharedPreferences = await SharedPreferences.getInstance();
-      final result = await CustomHttpRequest().login(emailController.text, passwordController.text);
+      final result = await CustomHttpRequest()
+          .login(emailController.text, passwordController.text);
       final data = jsonDecode(result);
       print('111111111111111111111');
       print(" the login data are : $data");
       if (data["access_token"] != null) {
         showInToast("Login successfully");
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
           return HomePage();
         }));
         setState(() {
@@ -112,16 +111,19 @@ class _LoginPageState extends State<LoginPage> {
       });
 
       print("something wrong  $e");
-      showInToast("Email & Password didn't match");}}
-  showInToast(String value){
+      showInToast("Email & Password didn't match");
+    }
+  }
+
+  showInToast(String value) {
     Fluttertoast.showToast(
-        msg: "$value",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.yellow,
-        textColor: Colors.red,
-        fontSize: 16.0,
+      msg: "$value",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.yellow,
+      textColor: Colors.red,
+      fontSize: 16.0,
     );
   }
 
@@ -140,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Form(
             key: _formKey,
             child: Container(
-              width:  MediaQuery.of(context).size.width,
+              width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(top: 260),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -150,8 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               child: Padding(
-                padding:
-                 EdgeInsets.only(top: 30, left: 12, right: 12),
+                padding: EdgeInsets.only(top: 30, left: 12, right: 12),
                 child: ListView(
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -163,8 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                           fontSize: 22,
                           color: Colors.white,
-                          fontWeight: FontWeight.w800
-                      ),
+                          fontWeight: FontWeight.w800),
                     ),
                     SizedBox(
                       height: 10,
@@ -193,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: emailController,
                       hintText: 'Enter your Email Address',
                       icon: Icons.email,
-                      function: (value){
+                      function: (value) {
                         if (value.isEmpty) {
                           return "*email addresBrandColors.colorPrimaryDark";
                         }
@@ -203,9 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                         if (!value.contains('.')) {
                           return "*wrong email address";
                         }
-
                       },
-
                     ),
                     SizedBox(
                       height: 10,
@@ -222,25 +220,25 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextFormField(
                       controller: passwordController,
-
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             gapPadding: 5.0,
-                            borderSide:  BorderSide(color: Colors.white,width: 2.5)),
-                        prefixIcon:Icon(Icons.lock_sharp,
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 2.5)),
+                        prefixIcon: Icon(
+                          Icons.lock_sharp,
                           color: Colors.black54,
-                          size: 18,),
+                          size: 18,
+                        ),
                         suffixIcon: GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             setState(() {
                               obser = !obser;
                             });
                           },
                           child: Icon(
-                            obser?
-                            Icons.visibility_off
-                                : Icons.visibility,
+                            obser ? Icons.visibility_off : Icons.visibility,
                             color: !obser ? Colors.white : Colors.grey,
                             size: 18,
                           ),
@@ -248,8 +246,8 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: 'password',
                       ),
                       obscureText: obser,
-                      validator: (value){
-                        if(value!.isEmpty){
+                      validator: (value) {
+                        if (value!.isEmpty) {
                           return "*please enter password";
                         }
                       },
@@ -259,25 +257,23 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Container(
                       height: 50,
-                      width:  200,
-
+                      width: 200,
                       decoration: BoxDecoration(
                         color: BrandColors.colorPrimaryDark,
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
                       ),
-                      margin:EdgeInsets.only(top: 50),
+                      margin: EdgeInsets.only(top: 50),
                       child: TextButton(
                         onPressed: () {
                           getLogin();
-                         // _submit();
+                          // _submit();
                         },
                         child: Center(
                           child: Text(
                             'Log In',
-                            style: TextStyle(
-                                color: Colors.white, fontSize: 16),
+                            style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         ),
                       ),
