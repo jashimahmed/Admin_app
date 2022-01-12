@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
         showInToast("Login successfully");
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
-          return HomePage();
+          return MainPage();
         }));
         setState(() {
           sharedPreferences!.setString("token", data['access_token']);

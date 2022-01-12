@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(providers: [
+  runApp(
+    MultiProvider(
+      providers: [
     ChangeNotifierProvider<OrderProvider>(create: (_) => OrderProvider()),
     ChangeNotifierProvider<CategoryProvider>(create: (_) => CategoryProvider()),
   ], child: const MyApp()));

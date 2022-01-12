@@ -81,7 +81,6 @@ class CustomHttpRequest {
     } else {
       print("something wrong in category data");
     }
-
     return categoryList;
   }
 }
